@@ -1,0 +1,16 @@
+
+Table dropped.
+
+
+Table created.
+
+
+335027 rows created.
+
+
+185479 rows created.
+
+
+Commit complete.
+
+SQL> @make_eki_srch2

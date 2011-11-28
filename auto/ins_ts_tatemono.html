@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ins_ts_tatemono.sql</title>
+<link rev="made" href="mailto:mtakiuch@rs1.kantei.co.jp" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#history">HISTORY</a></li>
+	<li><a href="#trouble_shooting">Trouble Shooting</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p>ins_ts_tatemono.sql</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>TS_TATEMONO(建物マスタ）にデータを挿入する
+PRIMARY <code>KEY(TATEMONO_CD,TOIAWASE_NO,KYOKYU_CD)</code>
+となっており、同一建物情報は挿入されない</p>
+<p>建物種別はこの段階で</p>
+<dl>
+<dt><strong><a name="item__83a_83p_81_5b_83g">アパート</a></strong><br />
+</dt>
+<dt><strong><a name="item__83_5e_83e_83_93_83n_83e_83x_81e_83e_83_89_83x_83n">タウンハウス・テラスハウス</a></strong><br />
+</dt>
+<dt><strong><a name="item__83_7d_83_93_83v_83_87_83_93">マンション</a></strong><br />
+</dt>
+<dt><strong><a name="item__88_ea_8c_cb_8c_9a_82_c4">一戸建て</a></strong><br />
+</dt>
+</dl>
+<p>の４分類に分けられる</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<ol>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_created">/10/25 M.TAKIUCHI CREATED</a></strong><br />
+</li>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_comment_add_for_pod">/10/25 M.TAKIUCHI COMMENT ADD FOR POD</a></strong><br />
+</li>
+</ol>
+<p>
+</p>
+<hr />
+<h1><a name="trouble_shooting">Trouble Shooting</a></h1>
+<p>基本的には、最初のデータから再構築となる。TOUROKUYMDに実行時間が挿入されるので
+やり直す際の参考データになるかもしれない。</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p><a href="mailto:システム部　瀧内誠(mtakiuc@kantei.co.jp)">システム部　瀧内誠(mtakiuc@kantei.co.jp)</a></p>
+
+</body>
+
+</html>

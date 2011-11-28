@@ -1,0 +1,8 @@
+
+SQL*Loader: Release 9.2.0.8.0 - Production on êÖ Jan 5 16:13:08 2011
+
+Copyright (c) 1982, 2002, Oracle Corporation.  All rights reserved.
+
+SQL*Loader-500: Unable to open file (sidkbat.ctl)
+SQL*Loader-553: file not found
+SQL*Loader-509: System error: No such file or directory

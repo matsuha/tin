@@ -1,0 +1,41 @@
+BEGIN
+  DBMS_STATS.UNLOCK_TABLE_STATS('TS_ADAM','TS_HEYA_TINRYO_HIS_SUM');
+END;
+/
+BEGIN
+  DBMS_STATS.UNLOCK_TABLE_STATS('TS_ADAM','TS_EKI_SRCH');
+END;
+/
+BEGIN
+	DBMS_STATS.GATHER_TABLE_STATS(
+		OWNNAME       => 'TS_ADAM'
+		,TABNAME      => 'TS_HEYA_TINRYO_HIS_SUM'
+		,cascade=> TRUE
+		,METHOD_OPT=>'FOR ALL INDEXED'
+	);
+END;
+/
+BEGIN
+	DBMS_STATS.GATHER_TABLE_STATS(
+		OWNNAME       => 'TS_ADAM'
+		,TABNAME      => 'TS_EKI_SRCH'
+		,cascade=> TRUE
+		,METHOD_OPT=>'FOR ALL INDEXED'
+	);
+END;
+/
+BEGIN
+  DBMS_STATS.LOCK_TABLE_STATS('TS_ADAM','TS_HEYA_TINRYO_HIS_SUM');
+END;
+/
+BEGIN
+  DBMS_STATS.LOCK_TABLE_STATS('TS_ADAM','TS_EKI_SRCH');
+END;
+/
+select * from dba_tab_stats_history
+where table_name like 'TS_HEYA_TINRYO_HIS_SUM'
+/
+select * from dba_tab_stats_history
+where table_name like 'TS_EKI_SRCH'
+/
+

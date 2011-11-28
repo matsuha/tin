@@ -1,0 +1,366 @@
+Enter value for work_tbl: apa110817
+old   1: DROP TABLE RAW&&WORK_TBL
+new   1: DROP TABLE RAWapa110817
+DROP TABLE RAWapa110817
+           *
+ERROR at line 1:
+ORA-00942: 表またはビューが存在しません。 
+
+
+Elapsed: 00:00:00.04
+old   1: CREATE TABLE RAW&&WORK_TBL
+new   1: CREATE TABLE RAWapa110817
+old   7: from &&WORK_TBL
+new   7: from apa110817
+
+Table created.
+
+Elapsed: 00:00:00.09
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2* WHERE TINSYAKU_KEITAI_KBN like 'ダブルゼロ'
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2  WHERE  10000 > TINRYO
+  3* OR  1000000 < TINRYO
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2* WHERE  KANRIHI > TINRYO
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.06
+  1  DELETE FROM   &&WORK_TBL
+  2* WHERE  KYOEKIHI > TINRYO
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2* WHERE  KANSEI_YMD < TO_DATE('19600101','YYYYMMDD')
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2* WHERE  KANSEI_YMD > KYOKYU_YMD + 365
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.06
+  1  DELETE FROM   &&WORK_TBL
+  2* WHERE  not (JUSHOCD1 >= 1 AND JUSHOCD1 <= 47)
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2  WHERE
+  3  TATEMONO_SYUBETU_NM
+  4  not in
+  5  (
+  6  'アパート',
+  7  '貸家',
+  8  '長屋',
+  9  'コーポ',
+ 10  'マンション',
+ 11  'ハイツ',
+ 12  'テラスハウス',
+ 13  '一戸建て',
+ 14  'タウンハウス'
+ 15* )
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+6 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2  WHERE
+  3  KOZO_SYUBETU_NM
+  4  not in
+  5  (
+  6  '軽量鉄骨造',
+  7  'ALC',
+  8  '木造',
+  9  '鉄骨造',
+ 10  'SRC(鉄骨鉄筋コンクリート)',
+ 11  '重量鉄骨造',
+ 12  'PC(プレキャストコンクリート)',
+ 13  'RC(鉄筋コンクリート造)'
+ 14* )
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM   &&WORK_TBL
+new   1: DELETE FROM   apa110817
+
+2 rows deleted.
+
+Elapsed: 00:00:00.07
+  1  DELETE FROM   &&WORK_TBL
+  2  WHERE
+  3  MADORI_NM not in
+  4  (
+  5  '1DK','1DK'
+  6  ,'1K','1K'
+  7  ,'1LDK','1LDK'
+  8  ,'1R','1R'
+  9  ,'1SDK','1DK'
+ 10  ,'1SLDK','1LDK'
+ 11  ,'2DK','2DK'
+ 12  ,'2K','2K'
+ 13  ,'2LDK','2LDK'
+ 14  ,'2R','2K'
+ 15  ,'2SDK','2DK'
+ 16  ,'2SLDK','2LDK'
+ 17  ,'3DK','3DK'
+ 18  ,'3K','3K'
+ 19  ,'3LDK','3LDK'
+ 20  ,'3R','3K'
+ 21  ,'3SDK','3DK'
+ 22  ,'3SLDK','3LDK'
+ 23  ,'4DK','4DK'
+ 24  ,'4K','4K'
+ 25  ,'4LDK','4LDK'
+ 26  ,'4R','4K'
+ 27  ,'4SDK','4DK'
+ 28  ,'4SLDK','4LDK'
+ 29  ,'5DK','5DK'
+ 30  ,'5K','5K'
+ 31  ,'5LDK','5LDK'
+ 32  ,'5R','5K'
+ 33  ,'5SDK','5DK'
+ 34  ,'5SLDK','5LDK'
+ 35  ,'6DK','6DK'
+ 36  ,'6K','6K'
+ 37  ,'6LDK','6LDK'
+ 38  ,'6R','6K'
+ 39  ,'6SDK','6DK'
+ 40  ,'6SLDK','6LDK'
+ 41  ,'7DK','7DK'
+ 42  ,'7K','7K'
+ 43  ,'7LDK','7LDK'
+ 44  ,'7R','7K'
+ 45  ,'7SDK','7DK'
+ 46  ,'7SLDK','7LDK'
+ 47* )
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: DELETE FROM &&WORK_TBL
+new   1: DELETE FROM apa110817
+
+0 rows deleted.
+
+Elapsed: 00:00:00.07
+old   1: DELETE FROM &&WORK_TBL
+new   1: DELETE FROM apa110817
+
+4100 rows deleted.
+
+Elapsed: 00:00:00.22
+  1  DELETE FROM &&WORK_TBL
+  2* WHERE  KITEN_TOUROKUYMD <  KYOKYU_YMD - 365
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+old   1: UPDATE &&WORK_TBL SET TATEMONO_SYUBETU =
+new   1: UPDATE apa110817 SET TATEMONO_SYUBETU =
+
+1554 rows updated.
+
+Elapsed: 00:00:00.11
+  1  UPDATE &&WORK_TBL SET TATEMONO_SYUBETU =
+  2  			decode(TATEMONO_SYUBETU_NM
+  3  				,'アパート','アパート'
+  4  				,'コーポ','アパート'
+  5  				,'ハイツ','アパート'
+  6  				,'タウンハウス','タウンハウス・テラスハウス'
+  7  				,'テラスハウス','タウンハウス・テラスハウス'
+  8  				,'長屋','タウンハウス・テラスハウス'
+  9  				,'マンション','マンション'
+ 10  				,'一戸建て','一戸建て'
+ 11  				,'貸家','一戸建て'
+ 12* 				,TATEMONO_SYUBETU_NM)
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+old   1: drop table JU1STD&&WORK_TBL
+new   1: drop table JU1STDapa110817
+drop table JU1STDapa110817
+           *
+ERROR at line 1:
+ORA-00942: 表またはビューが存在しません。 
+
+
+Elapsed: 00:00:00.05
+old   1: create table JU1STD&&WORK_TBL as
+new   1: create table JU1STDapa110817 as
+old   6: from &&WORK_TBL
+new   6: from apa110817
+
+Table created.
+
+Elapsed: 00:00:00.08
+old   1: drop table STDBK&&WORK_TBL
+new   1: drop table STDBKapa110817
+drop table STDBKapa110817
+           *
+ERROR at line 1:
+ORA-00942: 表またはビューが存在しません。 
+
+
+Elapsed: 00:00:00.04
+old   1: create table STDBK&&WORK_TBL as
+new   1: create table STDBKapa110817 as
+old   2: select * from &&WORK_TBL
+new   2: select * from apa110817
+old   7: select tatemono_cd,roomno,toiawase_no,tinryo from &&WORK_TBL apawk,ju1std&&WORK_TBL ju1std
+new   7: select tatemono_cd,roomno,toiawase_no,tinryo from apa110817 apawk,ju1stdapa110817 ju1std
+
+Table created.
+
+Elapsed: 00:00:00.34
+old   1: delete from &&WORK_TBL
+new   1: delete from apa110817
+old   6: select tatemono_cd,roomno,toiawase_no,tinryo from &&WORK_TBL apawk,JU1STD&&WORK_TBL ju1std
+new   6: select tatemono_cd,roomno,toiawase_no,tinryo from apa110817 apawk,JU1STDapa110817 ju1std
+
+55 rows deleted.
+
+Elapsed: 00:00:00.12
+  1  delete from &&WORK_TBL
+  2  where
+  3  (tatemono_cd,roomno,toiawase_no,tinryo)
+  4  in
+  5  (
+  6  select tatemono_cd,roomno,toiawase_no,tinryo from &&WORK_TBL apawk,JU1STD&&WORK_TBL ju1std
+  7  where
+  8  (
+  9  apawk.tinryo/apawk.senyu_m2 > ( ju1std.m2tin + ju1std.std * 2 )
+ 10  or
+ 11  apawk.tinryo/apawk.senyu_m2 < ( ju1std.m2tin - ju1std.std * 2 )
+ 12  )
+ 13  and
+ 14  apawk.jushocd1 = ju1std.jushocd1
+ 15  and
+ 16  apawk.jushocd2 = ju1std.jushocd2
+ 17  and
+ 18  apawk.tatemono_syubetu = ju1std.tatemono_syubetu
+ 19* )
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+old   1: drop table JU1STDAFTER&&WORK_TBL
+new   1: drop table JU1STDAFTERapa110817
+drop table JU1STDAFTERapa110817
+           *
+ERROR at line 1:
+ORA-00942: 表またはビューが存在しません。 
+
+
+Elapsed: 00:00:00.03
+old   1: create table JU1STDAFTER&&WORK_TBL as
+new   1: create table JU1STDAFTERapa110817 as
+old   6: from &&WORK_TBL
+new   6: from apa110817
+
+Table created.
+
+Elapsed: 00:00:00.08
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+old   1: delete from &&WORK_TBL
+new   1: delete from apa110817
+old   5: where haisiymd  < (select kyokyu_ymd - 365 * 5  from &&WORK_TBL where rownum = 1)
+new   5: where haisiymd  < (select kyokyu_ymd - 365 * 5  from apa110817 where rownum = 1)
+
+0 rows deleted.
+
+Elapsed: 00:00:00.06
+old   1: delete from  &&WORK_TBL
+new   1: delete from  apa110817
+old   5: where haisiymd  < (select kyokyu_ymd - 365 * 5  from &&WORK_TBL where rownum = 1)
+new   5: where haisiymd  < (select kyokyu_ymd - 365 * 5  from apa110817 where rownum = 1)
+
+0 rows deleted.
+
+Elapsed: 00:00:00.14
+old   1: delete from &&WORK_TBL
+new   1: delete from apa110817
+old   5: where haisiymd < (select kyokyu_ymd - 365 * 5  from &&WORK_TBL where rownum = 1)
+new   5: where haisiymd < (select kyokyu_ymd - 365 * 5  from apa110817 where rownum = 1)
+
+0 rows deleted.
+
+Elapsed: 00:00:00.33
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+SQL> exit

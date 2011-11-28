@@ -1,0 +1,14 @@
+PREVTIME=110817
+THISTIME=110824
+sed s/HIDUKEVAL/$THISTIME/g c21orig.ctl > c21tmp.ctl
+sqlldr c21/c21 c21tmp.ctl
+echo apawk | sqlplus c21/c21 @InsertApawk
+echo apawk | sqlplus c21/c21 @Del
+grep ORA delete_work_tb.lst
+sed -e s/HIDUKEPREV/$PREVTIME/g -e s/HIDUKENEXT/$THISTIME/g define.org > define.sql
+sqlplus c21/c21 @bat
+grep ORA bat.lst
+sqlplus c21/c21 @up_ts_heya_tinryo_his_sum_map
+sqlplus c21/c21 @aftermap
+sqlplus c21/c21 @dust_col_c21.sql
+#grep ORA aftermap.lst

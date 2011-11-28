@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ins_ts_heya_tinryo_hist_start.sql</title>
+<link rev="made" href="mailto:mtakiuch@rs1.kantei.co.jp" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#trouble_shooting">Trouble Shooting</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>ins_ts_heya_tinryo_hist_start.sql</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>賃料履歴マスタ(TS_HEYA_TINRYO_HIS)のTIN_HIS_YMD（履歴カラムに）
+END_FLG!=1(提供継続またはSTART_FLG=1）情報よりも
+END_FLG=1（提供が終了）している情報のほうが新しい場合</p>
+<p>今回のデータに該当建物(TATEMONO_CD)＋部屋番号（ROOMNO)の情報が含まれれば
+データ提供が再スタートされたとみなして、
+START_FLG＝１のレコードをインサートします。</p>
+<dl>
+<dt><strong><a name="item_tin_his_ymd_82_c9_82_cd_8d_a1_89_f1_82_cc_83f_81_5">TIN_HIS_YMDには今回のデータ提供日が入ります</a></strong><br />
+</dt>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="trouble_shooting">Trouble Shooting</a></h1>
+<p>TOUROKUYMD が最新でSTART_FLG=1のレコードを消すオペレーションが必要</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p><a href="mailto:システム部　瀧内誠(mtakiuc@kantei.co.jp)">システム部　瀧内誠(mtakiuc@kantei.co.jp)</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+#!/bin/csh
+mkdir html
+echo '<html><body>' > html/index.html
+echo '<h1>賃料査定バッチSQLリスト実行順</h1>' > html/index.html
+foreach i (`grep ^@ bat.sql | sed -e 's/@//g'`)
+	set filename=`basename $i:r`
+	echo ${filename}.sql
+	echo "<a href=${filename}.html>${filename}.sql</a><br>" >> html/index.html
+	grep ^REM ${filename}.sql | sed -e 's/\ \ \ \ /	/g' | sed -e 's/^REM\ *//g' | pod2html --title=${filename}.sql > html/${filename}.html
+end
+echo '</body></html>' >> html/index.html

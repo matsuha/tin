@@ -1,0 +1,98 @@
+truncate table ts_heya_tinryo_his_sum
+/
+insert into ts_heya_tinryo_his_sum
+(tatemono_cd,roomno,end_flg,
+		start_ymd_sum,
+		end_ymd_sum,
+		kyokyu_ymd,
+		period)
+select 
+		tatemono_cd,
+		roomno,
+		end_flg,
+		start_ymd_sum,
+		end_ymd_sum,
+		to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd') kyokyu_ymd,
+		round(months_between(end_ymd_sum,start_ymd_sum),3) period
+from ts_heya_tinryo_his
+where
+(tatemono_cd,roomno,end_ymd) in (
+select tatemono_cd,roomno,max(end_ymd_sum) max_end from ts_heya_tinryo_his his
+	  where his.start_flg != '1'
+	  and his.end_ymd_sum > sysdate - 360 * 3
+	  and his.start_ymd_sum > sysdate - 360 * 3
+	  group by tatemono_cd,roomno
+)
+/
+update ts_heya_tinryo_his_sum set exclusion='1',kousinymd=sysdate
+where (tatemono_cd,roomno)
+in
+(
+select tatemono_cd,roomno from (
+select tatemono_cd,roomno,count(*)
+from 
+ts_heya_tinryo_his_sum
+where
+exclusion != '1'
+group by tatemono_cd,roomno
+having count(*) > 1
+)
+)
+and end_flg != '1'
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	aa.start_tinryo_sum = (
+		select
+			min(tinryo) as start_tinryo_sum
+		from
+			(select tatemono_cd,roomno,tinryo
+			from ts_heya_tinryo_his
+			where (tatemono_cd,roomno,end_ymd)
+			in
+			(
+					select his.tatemono_cd,his.roomno,min(his.end_ymd) end_ymd
+					from ts_heya_tinryo_his his,ts_heya_tinryo_his_sum sum
+					where his.tatemono_cd = sum.tatemono_cd
+					and his.roomno = sum.roomno
+					and his.start_ymd = sum.start_ymd_sum
+					group by his.tatemono_cd,his.roomno
+			) 
+			and ts_heya_tinryo_his.end_flg != '1'
+			and ts_heya_tinryo_his.start_flg != '1'
+			) bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+        )
+where exclusion='0'
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	aa.end_tinryo_sum = (
+		select
+			min(tinryo) as end_tinryo_sum
+		from
+			(select tatemono_cd,roomno,tinryo
+			from ts_heya_tinryo_his
+			where (tatemono_cd,roomno,start_ymd)
+			in
+			(
+					select his.tatemono_cd,his.roomno,max(his.start_ymd) start_ymd
+					from ts_heya_tinryo_his his,ts_heya_tinryo_his_sum sum
+					where his.tatemono_cd = sum.tatemono_cd
+					and his.roomno = sum.roomno
+					and his.end_ymd = sum.end_ymd_sum
+					group by his.tatemono_cd,his.roomno
+			)
+			and ts_heya_tinryo_his.end_flg != '1'
+			and ts_heya_tinryo_his.start_flg != '1'
+			) bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+        )
+where exclusion='0'
+/

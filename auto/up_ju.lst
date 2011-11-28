@@ -1,0 +1,285 @@
+
+167786 rows updated.
+
+Elapsed: 00:00:11.67
+
+Commit complete.
+
+Elapsed: 00:00:00.04
+
+167786 rows updated.
+
+Elapsed: 00:00:15.38
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+
+167786 rows updated.
+
+Elapsed: 00:00:11.48
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+167786 rows updated.
+
+Elapsed: 00:00:10.34
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+
+Index dropped.
+
+Elapsed: 00:00:00.08
+
+Index created.
+
+Elapsed: 00:00:00.37
+
+Index dropped.
+
+Elapsed: 00:00:00.05
+
+Index created.
+
+Elapsed: 00:00:00.25
+
+Index dropped.
+
+Elapsed: 00:00:00.07
+
+Index created.
+
+Elapsed: 00:00:00.33
+
+Index dropped.
+
+Elapsed: 00:00:00.02
+
+Index created.
+
+Elapsed: 00:00:00.28
+
+Index dropped.
+
+Elapsed: 00:00:00.04
+
+Index created.
+
+Elapsed: 00:00:00.27
+
+167786 rows updated.
+
+Elapsed: 00:00:10.52
+
+Commit complete.
+
+Elapsed: 00:00:00.03
+jusho_sts 3
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new   2: where kusitu_ym = trunc(to_date('20101222', 'yyyymmdd'),'dd')
+
+0 rows deleted.
+
+Elapsed: 00:00:00.03
+old   5: trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'dd') kusitu_ym,
+new   5: trunc(to_date('20101222', 'yyyymmdd'),'dd') kusitu_ym,
+old   8: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   8: where kusitu_ym = trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows created.
+
+Elapsed: 00:00:00.02
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   2: where kusitu_ym = trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows deleted.
+
+Elapsed: 00:00:00.02
+old   8:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new   8:     trunc(to_date('20101222', 'yyyymmdd'),'mm') kusitu_ym,
+old  21:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  21:     trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+56 rows created.
+
+Elapsed: 00:00:00.16
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+
+Table dropped.
+
+Elapsed: 00:00:00.17
+old   6: 			trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new   6: 			trunc(to_date('20101222', 'yyyymmdd'),'mm') kusitu_ym,
+old  22: 						 trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  22: 						 trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+Table created.
+
+Elapsed: 00:00:00.19
+
+Index created.
+
+Elapsed: 00:00:00.02
+
+Table analyzed.
+
+Elapsed: 00:00:00.02
+
+Table analyzed.
+
+Elapsed: 00:00:00.14
+
+Table analyzed.
+
+Elapsed: 00:00:00.03
+old  10: 		and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  10: 		and aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+old  12: 	where aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  12: 	where aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+56 rows updated.
+
+Elapsed: 00:00:00.02
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+eki_sts 2
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new   2: where kusitu_ym = trunc(to_date('20101222', 'yyyymmdd'),'dd')
+
+0 rows deleted.
+
+Elapsed: 00:00:00.13
+old   5: trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')) kusitu_ym,
+new   5: trunc(to_date('20101222', 'yyyymmdd')) kusitu_ym,
+old   8: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   8: where kusitu_ym = trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows created.
+
+Elapsed: 00:00:00.04
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   2: where kusitu_ym = trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows deleted.
+
+Elapsed: 00:00:00.02
+old   9:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new   9:     trunc(to_date('20101222', 'yyyymmdd'),'mm') kusitu_ym,
+old  23:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm'),
+new  23:     trunc(to_date('20101222', 'yyyymmdd'),'mm'),
+old  31:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new  31:     trunc(to_date('20101222', 'yyyymmdd'),'mm') kusitu_ym,
+old  45:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm'),
+new  45:     trunc(to_date('20101222', 'yyyymmdd'),'mm'),
+old  53:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new  53:     trunc(to_date('20101222', 'yyyymmdd'),'mm') kusitu_ym,
+old  67:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm'),
+new  67:     trunc(to_date('20101222', 'yyyymmdd'),'mm'),
+
+4863 rows created.
+
+Elapsed: 00:00:00.59
+consis ju eki kusitu 1
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20101117', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows updated.
+
+Elapsed: 00:00:00.03
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20101117', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows updated.
+
+Elapsed: 00:00:00.08
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20101117', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows updated.
+
+Elapsed: 00:00:00.02
+
+1 row updated.
+
+Elapsed: 00:00:00.02
+
+5 rows updated.
+
+Elapsed: 00:00:00.02
+drop index ekicddex1
+           *
+ERROR at line 1:
+ORA-01418: 指定した索引は存在しません。 
+
+
+Elapsed: 00:00:00.04
+
+Index created.
+
+Elapsed: 00:00:00.08
+drop index ekicddex2
+           *
+ERROR at line 1:
+ORA-01418: 指定した索引は存在しません。 
+
+
+Elapsed: 00:00:00.03
+
+Index created.
+
+Elapsed: 00:00:00.08
+
+Index dropped.
+
+Elapsed: 00:00:00.13
+
+Index created.
+
+Elapsed: 00:00:00.33
+
+Index dropped.
+
+Elapsed: 00:00:00.03
+
+Index created.
+
+Elapsed: 00:00:00.38
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20101117', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows updated.
+
+Elapsed: 00:00:00.27
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20101117', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20101222', 'yyyymmdd'),'mm')
+
+0 rows updated.
+
+Elapsed: 00:00:00.26
+
+25557 rows updated.
+
+Elapsed: 00:00:00.22
+
+Commit complete.
+
+Elapsed: 00:00:00.02

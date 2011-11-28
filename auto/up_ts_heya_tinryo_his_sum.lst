@@ -1,0 +1,47 @@
+absx up mae
+
+  COUNT(*)                                                                      
+----------                                                                      
+     96109                                                                      
+
+Elapsed: 00:00:00.10
+
+96109 rows updated.
+
+Elapsed: 00:00:03.79
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+absx up ato
+
+  COUNT(*)                                                                      
+----------                                                                      
+     96109                                                                      
+
+Elapsed: 00:00:00.06
+create setubi_need_sum table 0
+old   3: where sum.start_ymd_sum =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new   3: where sum.start_ymd_sum =  trunc(to_date('20110216', 'yyyymmdd'),'dd')
+
+10331 rows updated.
+
+Elapsed: 00:00:00.20
+old  38: 			where  months_between(to_date('&&THIS_KYOKYU_YMD','YYYYMMDD'),kansei_ymd) <= 36
+new  38: 			where  months_between(to_date('20110216','YYYYMMDD'),kansei_ymd) <= 36
+CREATE TABLE TS_SETUBI_NEEDS_SUM
+             *
+ERROR at line 1:
+ORA-00955: すでに使用されているオブジェクト名です。 
+
+
+Elapsed: 00:00:00.02
+create needs_sum2
+INSERT ALL
+*
+ERROR at line 1:
+ORA-00001: 一意制約(KANTEI.SYS_C0028169)に反しています 
+
+
+Elapsed: 00:00:01.10
+exlusion set 2 new data ,do not need comment

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ju_hist_sum.sql</title>
+<link rev="made" href="mailto:mtakiuch@rs1.kantei.co.jp" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#____1______e___u___________t_____e___u__________">処理1:履歴テーブルから履歴サマリテーブルを再作成</a></li>
+		<li><a href="#____2__y_________________o__________________">処理2:該当物件情報が複数登録されたときの処理</a></li>
+		<li><a href="#____3_f_____t_______x_____g____________">処理3：履歴サマリ　スタート時情報の取得</a></li>
+		<li><a href="#____4_f_____t_______g___h____________">処理4：履歴サマリ　エンド時情報の取得</a></li>
+	</ul>
+
+	<li><a href="#history">HISTORY</a></li>
+	<li><a href="#trouble_shooting">Trouble Shooting</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>ju_hist_sum.sql</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>履歴サマリ（TS_HEYA_TINRYO_HIS_SUM)は毎回初期化され、再計算される
+常に最新データセットを利用して再計算するので、削除しても大丈夫。</p>
+<p>
+</p>
+<h2><a name="____1______e___u___________t_____e___u__________">処理1:履歴テーブルから履歴サマリテーブルを再作成</a></h2>
+<pre>
+        履歴マスタ（TS_HEYA_TINRYO_HIS)中の最大END_YMDを保有する建物CDとROOMNOのリストを作成し
+該当する履歴マスタ情報を取得し、履歴サマリへインサートする
+注意）★懸案事項として、ＨＩＳの3年経過分は対象外としている</pre>
+<p>
+</p>
+<h2><a name="____2__y_________________o__________________">処理2:該当物件情報が複数登録されたときの処理</a></h2>
+<p>二重に登録された場合、ＥＮＤ_FLG＝１でないほうを削除
+注意）END_FLG付レコードと継続案件が複数ある可能性がある</p>
+<p>
+</p>
+<h2><a name="____3_f_____t_______x_____g____________">処理3：履歴サマリ　スタート時情報の取得</a></h2>
+<p>履歴サマリーには、最終の空室期間</p>
+<dl>
+<dt><strong><a name="item__8aj_8en_start_ymd_sum">開始 start_ymd_sum</a></strong><br />
+</dt>
+<dt><strong><a name="item__8fi_97_b9end_ymd_sum">終了end_ymd_sum</a></strong><br />
+</dt>
+</dl>
+<p>が登録されているので まずSTART_YMD_SUMを利用して、履歴マスタ
+の該当レコードを探し出し、該当レコード情報の
+	管理費、敷金礼金情報をひきだしスタート情報として履歴サマリーテーブルを更新する</p>
+<p>
+</p>
+<h2><a name="____4_f_____t_______g___h____________">処理4：履歴サマリ　エンド時情報の取得</a></h2>
+<p>次にEND_YMD_SUMを利用して、履歴マスタの該当レコードを探し出し、該当レコード情報の
+管理費、敷金礼金情報をひきだし終了情報として、履歴サマリを更新する</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<ol>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_created">/10/25 M.TAKIUCHI CREATED</a></strong><br />
+</li>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_comment_add_for_pod">/10/25 M.TAKIUCHI COMMENT ADD FOR POD</a></strong><br />
+</li>
+</ol>
+<p>
+</p>
+<hr />
+<h1><a name="trouble_shooting">Trouble Shooting</a></h1>
+<p>★★何回実行してもデータ整合性が狂わない
+( 最終データ提供日を利用して、サマリーテーブルを更新する)</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p><a href="mailto:システム部　瀧内誠(mtakiuc@kantei.co.jp)">システム部　瀧内誠(mtakiuc@kantei.co.jp)</a></p>
+
+</body>
+
+</html>

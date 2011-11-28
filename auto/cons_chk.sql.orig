@@ -1,0 +1,82 @@
+update ts_kusituritu_ju set bflg='',tflg='',sflg=''
+/
+commit
+/
+update ts_kusituritu_ju aa
+set bflg = '2'
+where (aa.jushocd1,aa.jushocd2,aa.jushonm1,aa.jushonm2)
+in
+(select
+aa.jushocd1,aa.jushocd2,aa.jushonm1,aa.jushonm2
+from ts_kusituritu_ju_bk bk
+where
+aa.jushocd1 = bk.jushocd1
+and aa.jushocd2 = bk.jushocd2
+and 
+(
+abs(nvl(bk.bosyu_sousu,0) / nvl(aa.bosyu_sousu,1)) > 1.5
+or 
+abs(nvl(bk.bosyu_sousu,0) / nvl(aa.bosyu_sousu,1)) < 0.75
+)
+and aa.bosyu_sousu > 10
+and aa.so_kosu_sousu > 10
+and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+)
+/
+update ts_kusituritu_ju aa
+set tflg = '2'
+where (aa.jushocd1,aa.jushocd2,aa.jushonm1,aa.jushonm2)
+in
+(select
+aa.jushocd1,aa.jushocd2,aa.jushonm1,aa.jushonm2
+from ts_kusituritu_ju_bk bk
+where
+aa.jushocd1 = bk.jushocd1
+and aa.jushocd2 = bk.jushocd2
+and 
+(
+abs(nvl(bk.avg_tinryo,0) / nvl(aa.avg_tinryo,1)) > 1.5
+or 
+abs(nvl(bk.avg_tinryo,0) / nvl(aa.avg_tinryo,1)) < 0.75
+)
+and aa.so_kosu_sousu > 10
+and aa.bosyu_sousu > 10
+and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+)
+/
+update ts_kusituritu_ju aa
+set sflg = '2'
+where (aa.jushocd1,aa.jushocd2,aa.jushonm1,aa.jushonm2)
+in
+(select
+aa.jushocd1,aa.jushocd2,aa.jushonm1,aa.jushonm2
+from ts_kusituritu_ju_bk bk
+where
+aa.jushocd1 = bk.jushocd1
+and aa.jushocd2 = bk.jushocd2
+and 
+(
+abs(nvl(bk.so_kosu_sousu,0) / nvl(aa.so_kosu_sousu,1)) > 1.5
+or 
+abs(nvl(bk.so_kosu_sousu,0) / nvl(aa.so_kosu_sousu,1)) < 0.75
+)
+and aa.so_kosu_sousu > 10
+and aa.bosyu_sousu > 10
+and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+)
+/
+update ts_kusituritu_ju aa
+set sflg = '1'
+where 
+ aa.so_kosu_sousu <= 10
+/
+update ts_kusituritu_ju aa
+set bflg = '1'
+where 
+ aa.bosyu_sousu <= 10
+/
+commit
+/

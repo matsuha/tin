@@ -1,0 +1,116 @@
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+drop index ts_heya_send_ymd_sum
+           *
+ERROR at line 1:
+ORA-01418: 指定した索引は存在しません。 
+
+
+create index ts_heya_send_ymd_sum on ts_heya_tinryo_his_sum(end_ymd_sum)
+                                                            *
+ERROR at line 1:
+ORA-01408: 列リストはすでに索引付けされています 
+
+
+drop index ts_heya_send_flg
+           *
+ERROR at line 1:
+ORA-01418: 指定した索引は存在しません。 
+
+
+create unique index ts_heya_send_flg on ts_heya_tinryo_his_sum(end_flg,tatemono_cd,roomno)
+                                                               *
+ERROR at line 1:
+ORA-01408: 列リストはすでに索引付けされています 
+
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+
+Index created.
+
+
+Index dropped.
+
+create index ts_sum_ekinm3 on ts_heya_tinryo_his_sum(eki_nm3,eki_toho_jikan3)
+                              *
+ERROR at line 1:
+ORA-01013: ユーザーによって現行の操作の取消しがリクエストされました。 
+
+
+
+SQL> reate unique index ts_heya_send_flg on ts_heya_tinryo_his_sum(end_flg,tatemono_cd,roomno);
+SP2-0734: unknown command beginning "reate uniq..." - rest of line ignored.
+SQL> create unique index ts_heya_send_flg on ts_heya_tinryo_his_sum(end_flg,tatemono_cd,roomno);
+
+Index created.
+
+SQL> 
+SQL> create index ts_heya_send_ymd_sum on ts_heya_tinryo_his_sum(end_ymd_sum);
+
+Index created.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> exit

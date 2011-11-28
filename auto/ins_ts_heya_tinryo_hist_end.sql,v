@@ -1,0 +1,49 @@
+head     1.1;
+access   ;
+symbols  ;
+locks    mtakiuch:1.1; strict;
+comment  @@;
+
+
+1.1
+date     2010.09.17.17.01.15;  author mtakiuch;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@INSERT INTO TS_HEYA_TINRYO_HIS (
+				TATEMONO_CD
+				,KYOKYU_CD
+				,ROOMNO
+				,TINRYO_HIS_YMD
+				,END_FLG
+		)
+		SELECT
+		     distinct(TATEMONO_CD) tatemono_cd
+		    ,KYOKYU_CD
+			,ROOMNO
+			,to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+			,'1' END_FLG
+		    FROM TS_HEYA_TINRYO
+		where (tatemono_cd,roomno) 
+		not in 
+		(select tatemono_cd,roomno
+		from apawk
+		where 
+		apawk.tatemono_cd = ts_heya_tinryo.tatemono_cd
+		and apawk.roomno = ts_heya_tinryo.roomno
+		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+		)
+		and kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+/
+@

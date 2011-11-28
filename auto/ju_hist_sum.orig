@@ -1,0 +1,698 @@
+REM
+REM =head1 NAME 
+REM
+REM ju_hist_sum.sql
+REM
+REM =head1 DESCRIPTION
+REM
+REM 履歴サマリ（TS_HEYA_TINRYO_HIS_SUM)は毎回初期化され、再計算される
+REM 常に最新データセットを利用して再計算するので、削除しても大丈夫。
+REM
+REM =head2 処理1:履歴テーブルから履歴サマリテーブルを再作成
+REM 
+REM	履歴マスタ（TS_HEYA_TINRYO_HIS)中の最大END_YMDを保有する建物CDとROOMNOのリストを作成し
+REM 該当する履歴マスタ情報を取得し、履歴サマリへインサートする
+REM 注意）★懸案事項として、ＨＩＳの3年経過分は対象外としている
+REM 
+REM =head2 処理2:該当物件情報が複数登録されたときの処理
+REM
+REM 二重に登録された場合、ＥＮＤ_FLG＝１でないほうを削除
+REM 注意）END_FLG付レコードと継続案件が複数ある可能性がある
+REM
+REM =head2 処理3：履歴サマリ　スタート時情報の取得
+REM
+REM 履歴サマリーには、最終の空室期間
+REM
+REM =over 2
+REM
+REM =item 開始 start_ymd_sum 
+REM
+REM =item 終了end_ymd_sum
+REM
+REM =back
+REM
+REM が登録されているので まずSTART_YMD_SUMを利用して、履歴マスタ
+REM の該当レコードを探し出し、該当レコード情報の
+REM	管理費、敷金礼金情報をひきだしスタート情報として履歴サマリーテーブルを更新する
+REM
+REM =head2 処理4：履歴サマリ　エンド時情報の取得
+REM
+REM 次にEND_YMD_SUMを利用して、履歴マスタの該当レコードを探し出し、該当レコード情報の
+REM 管理費、敷金礼金情報をひきだし終了情報として、履歴サマリを更新する
+REM 
+REM =head1 HISTORY
+REM
+REM =over 4
+REM
+REM =item 2010/10/25 M.TAKIUCHI CREATED
+REM
+REM =item 2010/10/25 M.TAKIUCHI COMMENT ADD FOR POD
+REM
+REM =back
+REM
+REM =head1 Trouble Shooting
+REM
+REM ★★何回実行してもデータ整合性が狂わない
+REM ( 最終データ提供日を利用して、サマリーテーブルを更新する)
+REM
+REM =head1 AUTHOR
+REM 
+REM システム部　瀧内誠(mtakiuc@kantei.co.jp)
+REM
+REM =cut
+REM
+REM 1.履歴サマリーテーブルを初期化
+REM
+truncate table ts_heya_tinryo_his_sum
+/
+REM
+REM
+insert into ts_heya_tinryo_his_sum
+(toiawase_no,tatemono_cd,roomno,end_flg,
+		start_ymd_sum,
+		end_ymd_sum,
+		kyokyu_ymd,
+		period)
+select 
+		toiawase_no,
+		tatemono_cd,
+		roomno,
+		end_flg,
+		start_ymd_sum,
+		end_ymd_sum,
+		to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd') kyokyu_ymd,
+		round(months_between(end_ymd_sum,start_ymd_sum),3) period
+from ts_heya_tinryo_his
+where
+(tatemono_cd,roomno,end_ymd) in (
+select tatemono_cd,roomno,max(end_ymd_sum) max_end from ts_heya_tinryo_his his
+	  where his.start_flg != '1'
+	  and his.end_ymd_sum > sysdate - 360 * 1
+	  and his.start_ymd_sum > sysdate - 360 * 1
+	  group by tatemono_cd,roomno
+)
+/
+REM
+REM
+update ts_heya_tinryo_his_sum set exclusion='1',kousinymd=sysdate
+where (tatemono_cd,roomno)
+in
+(
+select tatemono_cd,roomno from (
+select tatemono_cd,roomno,count(*)
+from 
+ts_heya_tinryo_his_sum
+where
+exclusion != '1'
+group by tatemono_cd,roomno
+having count(*) > 1
+)
+)
+and end_flg != '1'
+/
+REM
+REM
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(START_TINRYO ,START_KANRIHI ,START_KYOEKIHI ,START_SIKIKIN_TUKI_SU ,START_REIKIN_TUKI_SU
+    ,START_SIKIKIN
+    ,START_REIKIN
+    ,TINSYAKU_KEITAI_KBN
+    ,SYOKYAKU
+    ,START_SYOKYAKUKIN
+    ,START_SYOKYAKUKIN_TUKI_SU
+    ,START_SYOKYAKUKIN_RITU
+    ,KOSINRYO
+    ,KOSINRYO_TUKI_SU)
+	= (
+		select
+		tinryo ,KANRIHI ,KYOEKIHI ,SIKIKIN_TUKI_SU ,REIKIN_TUKI_SU
+			,SIKIKIN
+			,REIKIN
+			,TINSYAKU_KEITAI_KBN
+			,SYOKYAKU
+			,SYOKYAKUKIN
+			,SYOKYAKUKIN_TUKI_SU
+			,SYOKYAKUKIN_RITU
+			,KOSINRYO
+			,KOSINRYO_TUKI_SU
+		from
+			(select tatemono_cd,roomno,
+			tinryo ,KANRIHI ,KYOEKIHI ,SIKIKIN_TUKI_SU ,REIKIN_TUKI_SU
+			,SIKIKIN
+			,REIKIN
+			,TINSYAKU_KEITAI_KBN
+			,SYOKYAKU
+			,SYOKYAKUKIN
+			,SYOKYAKUKIN_TUKI_SU
+			,SYOKYAKUKIN_RITU
+			,KOSINRYO
+			,KOSINRYO_TUKI_SU
+			from ts_heya_tinryo_his
+			where (tatemono_cd,roomno,start_ymd,end_ymd)
+			in
+			(
+					select his.tatemono_cd,his.roomno,his.start_ymd,min(his.end_ymd) end_ymd
+					from ts_heya_tinryo_his his,ts_heya_tinryo_his_sum sum
+					where his.tatemono_cd = sum.tatemono_cd
+					and his.roomno = sum.roomno
+					and his.start_ymd = sum.start_ymd_sum
+					group by his.tatemono_cd,his.roomno,his.start_ymd
+			) 
+			and ts_heya_tinryo_his.end_flg != '1'
+			and ts_heya_tinryo_his.start_flg != '1'
+			) bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+						and rownum = 1
+      )
+where exclusion='0'
+/
+REM
+REM
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(END_TINRYO ,END_KANRIHI ,END_KYOEKIHI ,END_SIKIKIN_TUKI_SU ,END_REIKIN_TUKI_SU
+    ,END_SIKIKIN
+    ,END_REIKIN
+    ,TINSYAKU_KEITAI_KBN
+    ,SYOKYAKU
+    ,END_SYOKYAKUKIN
+    ,END_SYOKYAKUKIN_TUKI_SU
+    ,END_SYOKYAKUKIN_RITU
+    ,KOSINRYO
+    ,KOSINRYO_TUKI_SU
+	)
+		= (
+		select
+				tinryo ,KANRIHI ,KYOEKIHI ,SIKIKIN_TUKI_SU ,REIKIN_TUKI_SU
+					,SIKIKIN
+					,REIKIN
+					,TINSYAKU_KEITAI_KBN
+					,SYOKYAKU
+					,SYOKYAKUKIN
+					,SYOKYAKUKIN_TUKI_SU
+					,SYOKYAKUKIN_RITU
+					,KOSINRYO
+					,KOSINRYO_TUKI_SU
+		from
+			(select tatemono_cd,roomno,
+			 tinryo ,KANRIHI ,KYOEKIHI ,SIKIKIN_TUKI_SU ,REIKIN_TUKI_SU
+					,SIKIKIN
+					,REIKIN
+					,TINSYAKU_KEITAI_KBN
+					,SYOKYAKU
+					,SYOKYAKUKIN
+					,SYOKYAKUKIN_TUKI_SU
+					,SYOKYAKUKIN_RITU
+					,KOSINRYO
+					,KOSINRYO_TUKI_SU
+			from ts_heya_tinryo_his
+			where (tatemono_cd,roomno,end_ymd,start_ymd)
+			in
+			(
+					select his.tatemono_cd,his.roomno,his.end_ymd,max(his.start_ymd) start_ymd
+					from ts_heya_tinryo_his his,ts_heya_tinryo_his_sum sum
+					where his.tatemono_cd = sum.tatemono_cd
+					and his.roomno = sum.roomno
+					and his.end_ymd = sum.end_ymd_sum
+					group by his.tatemono_cd,his.roomno,his.end_ymd
+			)
+			and ts_heya_tinryo_his.end_flg != '1'
+			and ts_heya_tinryo_his.start_flg != '1'
+			) bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+		)
+where exclusion='0'
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+			jushocd1,
+			jushocd2,
+			jushocd3,
+			jushocd4,
+			tatemono_syubetu,
+			kozo_syubetu,
+			kansei_ymd,
+			so_kaisu,
+			so_kosu
+	) = (
+		select
+			jushocd1,
+			jushocd2,
+			jushocd3,
+			jushocd4,
+			tatemono_syubetu,
+			kozo_syubetu,
+			kansei_ymd,
+			so_kaisu,
+			so_kosu
+		from
+			ts_tatemono bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+			and bb.jushocd1 is not null
+			and bb.jushocd2 is not null
+			and rownum = 1
+	)
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+			so_kosu
+	) = (
+		select
+			max(nvl(so_kosu,0))
+		from
+			ts_tatemono bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+	)
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+			senyu_m2,
+			madori_nm,
+			kai,
+			madori,
+			heya_nm,
+			hogaku_nm,
+			kyokyu_cd,
+			KEIYAKU_KEITAI_KBN
+	) = (
+		select
+			max(senyu_m2) senyu_m2,
+			max(madori_nm) madori_nm,
+			max(kai) kai,
+			max(madori) madori,
+			max(heya_nm) heya_nm,
+			max(hogaku_nm) hogaku_nm,
+			max(kyokyu_cd) kyokyu_cd,
+			max(KEIYAKU_KEITAI_KBN) KEIYAKU_KEITAI_KBN
+		from
+			ts_heya bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+            and aa.roomno = bb.roomno
+	)
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+		EKI_TOHO_JIKAN1,
+		EKI_NM1,
+		EKI_CD1,
+		EKI_TOHO_JIKAN2,
+		EKI_NM2,
+		EKI_CD2,
+		EKI_TOHO_JIKAN3,
+		EKI_NM3,
+		EKI_CD3,
+		AABSX,
+		AABSY,
+		JUSHO,
+		JUSHO_NM,
+		ENSEN_NM1,
+		ENSEN_NM2,
+		ENSEN_NM3,
+			EKI_BUS_JIKAN1,
+			EKI_BUSTEI_TOHO_JIKAN1,
+			EKI_BUS_JIKAN2,
+			EKI_BUSTEI_TOHO_JIKAN2 ,
+			EKI_BUS_JIKAN3,
+			EKI_BUSTEI_TOHO_JIKAN3,
+			BUSTEI_TOHO_JIKAN1,
+			BUSTEI_TOHO_JIKAN2,
+			BUSTEI_TOHO_JIKAN3
+	) = (
+		select
+			EKI_TOHO_JIKAN1,
+			EKI_NM1,
+			EKI_CD1,
+			EKI_TOHO_JIKAN2,
+			EKI_NM2,
+			EKI_CD2,
+			EKI_TOHO_JIKAN3,
+			EKI_NM3,
+			EKI_CD3,
+			AABSX,
+			AABSY,
+			JUSHO,
+			JUSHO_NM,
+			ENSEN_NM1,
+			ENSEN_NM2,
+			ENSEN_NM3,
+			EKI_BUS_JIKAN1,
+			EKI_BUSTEI_TOHO_JIKAN1,
+			EKI_BUS_JIKAN2,
+			EKI_BUSTEI_TOHO_JIKAN2 ,
+			EKI_BUS_JIKAN3,
+			EKI_BUSTEI_TOHO_JIKAN3,
+			BUSTEI_TOHO_JIKAN1,
+			BUSTEI_TOHO_JIKAN2,
+			BUSTEI_TOHO_JIKAN3
+		from
+			ts_tatemono_dtl bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+			and rownum = 1
+	)
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+		MADORI_DTL_NM1
+		,MADORI_DTL_JYOSU1
+		,MADORI_DTL_NM2
+		,MADORI_DTL_JYOSU2
+		,MADORI_DTL_NM3
+		,MADORI_DTL_JYOSU3
+		,MADORI_DTL_NM4
+		,MADORI_DTL_JYOSU4
+		,MADORI_DTL_NM5
+		,MADORI_DTL_JYOSU5
+		,MADORI_DTL_NM6
+		,MADORI_DTL_JYOSU6
+		,MADORI_DTL_NM7
+		,MADORI_DTL_JYOSU7
+		,MADORI_DTL_NM8
+		,MADORI_DTL_JYOSU8
+		,MADORI_DTL_NM9
+		,MADORI_DTL_JYOSU9
+		,MADORI_DTL_NM10
+		,MADORI_DTL_JYOSU10
+		,MADORI_DTL_NM11
+		,MADORI_DTL_JYOSU11
+		,MADORI_DTL_NM12
+		,MADORI_DTL_JYOSU12
+	) = (
+		select
+				MADORI_DTL_NM1
+				,MADORI_DTL_JYOSU1
+				,MADORI_DTL_NM2
+				,MADORI_DTL_JYOSU2
+				,MADORI_DTL_NM3
+				,MADORI_DTL_JYOSU3
+				,MADORI_DTL_NM4
+				,MADORI_DTL_JYOSU4
+				,MADORI_DTL_NM5
+				,MADORI_DTL_JYOSU5
+				,MADORI_DTL_NM6
+				,MADORI_DTL_JYOSU6
+				,MADORI_DTL_NM7
+				,MADORI_DTL_JYOSU7
+				,MADORI_DTL_NM8
+				,MADORI_DTL_JYOSU8
+				,MADORI_DTL_NM9
+				,MADORI_DTL_JYOSU9
+				,MADORI_DTL_NM10
+				,MADORI_DTL_JYOSU10
+				,MADORI_DTL_NM11
+				,MADORI_DTL_JYOSU11
+				,MADORI_DTL_NM12
+				,MADORI_DTL_JYOSU12
+		from
+			ts_heya_dtl bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+            and aa.roomno = bb.roomno
+			and rownum = 1
+	)
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+		CYUSYAJO
+		,CYUSYA_RYO
+	) = (
+		select
+				CYUSYAJO
+				,nvl(CYUSYA_RYO,0)+ nvl(CYUSYA_RYO_ZEI,0)
+		from
+			ts_heya_cyusya bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+            and aa.roomno = bb.roomno
+			and rownum = 1
+	)
+/
+commit
+/
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+		SETUBI001
+		,SETUBI002
+		,SETUBI003
+		,SETUBI004
+		,SETUBI005
+		,SETUBI006
+		,SETUBI007
+		,SETUBI008
+		,SETUBI009
+		,SETUBI010
+		,SETUBI011
+		,SETUBI012
+		,SETUBI013
+		,SETUBI014
+		,SETUBI015
+		,SETUBI016
+		,SETUBI017
+		,SETUBI018
+		,SETUBI019
+		,SETUBI020
+		,SETUBI021
+		,SETUBI022
+		,SETUBI023
+		,SETUBI024
+		,SETUBI025
+		,SETUBI026
+		,SETUBI027
+		,SETUBI028
+		,SETUBI029
+		,SETUBI030
+		,SETUBI031
+		,SETUBI032
+		,SETUBI033
+		,SETUBI034
+		,SETUBI035
+		,SETUBI036
+		,SETUBI037
+		,SETUBI038
+		,SETUBI039
+		,SETUBI040
+		,SETUBI041
+		,SETUBI042
+		,SETUBI043
+		,SETUBI044
+		,SETUBI045
+		,SETUBI046
+		,SETUBI047
+		,SETUBI048
+		,SETUBI049
+		,SETUBI050
+		,SETUBI051
+		,SETUBI052
+		,SETUBI053
+		,SETUBI054
+		,SETUBI055
+		,SETUBI056
+		,SETUBI057
+		,SETUBI058
+		,SETUBI059
+		,SETUBI060
+		,SETUBI061
+		,SETUBI062
+		,SETUBI063
+		,SETUBI064
+		,SETUBI065
+		,SETUBI066
+		,SETUBI067
+		,SETUBI068
+		,SETUBI069
+		,SETUBI070
+		,SETUBI071
+	) = (
+		select
+			MAX(SETUBI001)
+			,MAX(SETUBI002)
+			,MAX(SETUBI003)
+			,MAX(SETUBI004)
+			,MAX(SETUBI005)
+			,MAX(SETUBI006)
+			,MAX(SETUBI007)
+			,MAX(SETUBI008)
+			,MAX(SETUBI009)
+			,MAX(SETUBI010)
+			,MAX(SETUBI011)
+			,MAX(SETUBI012)
+			,MAX(SETUBI013)
+			,MAX(SETUBI014)
+			,MAX(SETUBI015)
+			,MAX(SETUBI016)
+			,MAX(SETUBI017)
+			,MAX(SETUBI018)
+			,MAX(SETUBI019)
+			,MAX(SETUBI020)
+			,MAX(SETUBI021)
+			,MAX(SETUBI022)
+			,MAX(SETUBI023)
+			,MAX(SETUBI024)
+			,MAX(SETUBI025)
+			,MAX(SETUBI026)
+			,MAX(SETUBI027)
+			,MAX(SETUBI028)
+			,MAX(SETUBI029)
+			,MAX(SETUBI030)
+			,MAX(SETUBI031)
+			,MAX(SETUBI032)
+			,MAX(SETUBI033)
+			,MAX(SETUBI034)
+			,MAX(SETUBI035)
+			,MAX(SETUBI036)
+			,MAX(SETUBI037)
+			,MAX(SETUBI038)
+			,MAX(SETUBI039)
+			,MAX(SETUBI040)
+			,MAX(SETUBI041)
+			,MAX(SETUBI042)
+			,MAX(SETUBI043)
+			,MAX(SETUBI044)
+			,MAX(SETUBI045)
+			,MAX(SETUBI046)
+			,MAX(SETUBI047)
+			,MAX(SETUBI048)
+			,MAX(SETUBI049)
+			,MAX(SETUBI050)
+			,MAX(SETUBI051)
+			,MAX(SETUBI052)
+			,MAX(SETUBI053)
+			,MAX(SETUBI054)
+			,MAX(SETUBI055)
+			,MAX(SETUBI056)
+			,MAX(SETUBI057)
+			,MAX(SETUBI058)
+			,MAX(SETUBI059)
+			,MAX(SETUBI060)
+			,MAX(SETUBI061)
+			,MAX(SETUBI062)
+			,MAX(SETUBI063)
+			,MAX(SETUBI064)
+			,MAX(SETUBI065)
+			,MAX(SETUBI066)
+			,MAX(SETUBI067)
+			,MAX(SETUBI068)
+			,MAX(SETUBI069)
+			,MAX(SETUBI070)
+			,MAX(SETUBI071)
+		from
+			ts_heya_setubi bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+            and aa.roomno = bb.roomno
+	)
+/
+commit
+/
+prompt define update conunt check below2
+update
+	ts_heya_tinryo_his_sum aa
+set
+	(
+			toiawase_no
+	) = (
+		select
+			toiawase_no
+		from
+			ts_heya bb
+		where
+            aa.tatemono_cd = bb.tatemono_cd
+            and aa.roomno = bb.roomno
+			and rownum = 1
+	)
+	where aa.end_flg = '1'
+/
+commit
+/
+update
+ts_heya_tinryo_his_sum aa
+set
+			SIKIKIN=SIKIKIN+1,
+			END_SIKIKIN_TUKI_SU=ROUND(END_SIKIKIN/END_TINRYO,2)
+	where AA.END_SIKIKIN_TUKI_SU is NULL
+			AND  AA.END_SIKIKIN > 0
+			AND AA.END_TINRYO > 0
+/
+update
+ts_heya_tinryo_his_sum aa
+set
+		SIKIKIN=SIKIKIN+2,
+		START_SIKIKIN_TUKI_SU=ROUND(START_SIKIKIN/START_TINRYO,2)
+	where AA.START_SIKIKIN_TUKI_SU is NULL
+			AND  AA.START_SIKIKIN > 0
+			AND AA.START_TINRYO > 0
+/
+update
+ts_heya_tinryo_his_sum aa
+set
+		SIKIKIN= SIKIKIN+4,
+		END_REIKIN_TUKI_SU=ROUND(END_REIKIN/END_TINRYO,2)
+	where AA.END_REIKIN_TUKI_SU is NULL
+	AND  AA.END_REIKIN > 0
+	AND AA.END_TINRYO > 0
+/
+update
+ts_heya_tinryo_his_sum aa
+set
+		SIKIKIN=SIKIKIN+8,
+		START_REIKIN_TUKI_SU=ROUND(START_REIKIN/START_TINRYO,2)
+	where AA.START_REIKIN_TUKI_SU is NULL
+	AND  AA.START_REIKIN > 0
+	AND AA.START_TINRYO > 0
+/
+update
+ts_heya_tinryo_his_sum aa
+set
+		SIKIKIN=SIKIKIN+16,
+		END_SYOKYAKUKIN_TUKI_SU=ROUND(END_SYOKYAKUKIN/END_TINRYO,2)
+	where AA.END_SYOKYAKUKIN_TUKI_SU is NULL
+	AND  AA.END_SYOKYAKUKIN > 0
+	AND AA.END_TINRYO > 0
+/
+update
+ts_heya_tinryo_his_sum aa
+set
+		SIKIKIN=SIKIKIN+32,
+		START_SYOKYAKUKIN_TUKI_SU=ROUND(START_SYOKYAKUKIN/START_TINRYO,2)
+	where AA.START_SYOKYAKUKIN_TUKI_SU is NULL
+	AND  AA.START_SYOKYAKUKIN > 0
+	AND AA.START_TINRYO > 0
+/
+commit
+/

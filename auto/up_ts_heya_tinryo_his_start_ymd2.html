@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>up_ts_heya_tinryo_his_start_ymd2.sql</title>
+<link rev="made" href="mailto:mtakiuch@rs1.kantei.co.jp" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#history">HISTORY</a></li>
+	<li><a href="#trouble_shooting">Trouble Shooting</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>up_ts_heya_tiryo_his_start_ymd2.sql</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>賃料履歴(TS_HEYA_TINRYO_HIS)の情報を更新する</p>
+<p>今回、END_FLG=1（前回データ提供があったが、今回ない部屋）
+の履歴情報の情報開始日START_YMDを求める</p>
+<p>再スタートしていない物件(END_FLG=1が過去ない物件）は、
+最小のデータ供給日がSTART_YMDとなる。(END_FLGでもSTART_FLGでもない）
+(START_FLG!=1,END_FLG!=1のときのTS_HEYA_TINRYO_HIS.MIN(TIN_HIS_YMD))
+が物件の空室スタートの日となる</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<ol>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_created">/10/25 M.TAKIUCHI CREATED</a></strong><br />
+</li>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_comment_add_for_pod">/10/25 M.TAKIUCHI COMMENT ADD FOR POD</a></strong><br />
+</li>
+</ol>
+<p>
+</p>
+<hr />
+<h1><a name="trouble_shooting">Trouble Shooting</a></h1>
+<p>基本的には、最初のデータから再構築となる。</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p><a href="mailto:システム部　瀧内誠(mtakiuc@kantei.co.jp)">システム部　瀧内誠(mtakiuc@kantei.co.jp)</a></p>
+
+</body>
+
+</html>

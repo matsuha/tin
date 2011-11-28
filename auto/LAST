@@ -1,0 +1,12 @@
+PREVTIME=110608
+THISTIME=110615
+sed s/HIDUKEVAL/$THISTIME/g orig.ctl > tmp.ctl
+sqlldr kantei/kantei tmp.ctl
+echo apawk | sqlplus kantei/kantei @Del
+grep ORA delete_work_tb.lst
+sed -e s/HIDUKEPREV/$PREVTIME/g -e s/HIDUKENEXT/$THISTIME/g define.org > define.sql
+sqlplus kantei/kantei @bat
+grep ORA bat.lst
+sqlplus kantei/kantei @up_ts_heya_tinryo_his_sum_map
+#sqlplus kantei/kantei @aftermap
+#grep ORA aftermap.lst

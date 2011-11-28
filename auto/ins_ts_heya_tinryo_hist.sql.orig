@@ -1,0 +1,27 @@
+INSERT INTO TS_HEYA_TINRYO_HIS (
+				TATEMONO_CD
+				,KYOKYU_CD
+				,TOIAWASE_NO
+				,ROOMNO
+				,START_YMD
+				,TINRYO_HIS_YMD
+				,END_YMD
+				,END_YMD_SUM
+				,TINRYO
+		)
+		SELECT
+		    tatemono_cd
+		    ,KYOKYU_CD
+			,TOIAWASE_NO
+			,ROOMNO
+			,INITIAL_YMD
+			,KYOKYU_YMD
+			,KYOKYU_YMD
+			,KYOKYU_YMD
+			,TINRYO
+		from ts_heya_tinryo
+		where 
+		kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+		and priority_select=1
+		and priority!=1
+/

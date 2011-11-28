@@ -1,0 +1,10 @@
+UPDATE TS_HEYA_TINRYO SET KYOKYU_YMD = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD'),KOUSINYMD=SYSDATE
+		where (tatemono_cd,toiawase_no,roomno,tinryo) in (select tatemono_cd,toiawase_no,roomno,tinryo from apawk)
+		and KYOKYU_YMD =  to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+/
+UPDATE TS_HEYA_TINRYO_HIS SET END_YMD = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD'),KOUSINYMD=SYSDATE
+		where (tatemono_cd,toiawase_no,roomno,tinryo) in (select tatemono_cd,toiawase_no,roomno,tinryo from ts_heya_tinryo_his)
+		and TINRYO_HIS_YMD =  to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+		and start_flg != '1'
+		and end_flg != '1'
+/

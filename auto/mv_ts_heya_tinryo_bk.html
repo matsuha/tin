@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>mv_ts_heya_tinryo_bk.sql</title>
+<link rev="made" href="mailto:mtakiuch@rs1.kantei.co.jp" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#history">HISTORY</a></li>
+	<li><a href="#trouble_shooting">Trouble Shooting</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>mv_ts_heya_tinryo_bk.sql</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>部屋賃料バックアップ(TS_HEYA_TINRYO_BK)の情報をインサートする
+部屋賃料(TS_HEYA_TINRYO)から削除する</p>
+<pre>
+          PRIMARY KEY(TATEMONO_CD,TOIAWASE_NO,KYOKYU_CD,ROOMNO,TINRYO,KYOKYU_YMD)</pre>
+<p>前回のデータセットに含まれていた賃料情報(TS_HEYA_TINRYO)が
+今回のデータにふくまれていなかった場合
+TS_HEYA_TINRYOからTS_HEYA_TINRYO_BKにデータをバックアップし
+該当レコードをTS_HEYA_TINRYOから削除する。</p>
+<p>空室開始日～空室終了日を一世代として、
+最新世代データのみをTS_HEYA_TINRYOに確保するため
+１世代前の情報を削除する処理</p>
+<p>重要）最終的にバックアップデータの削除日付を検討する必要あり</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<ol>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_created">/10/25 M.TAKIUCHI CREATED</a></strong><br />
+</li>
+<li><strong><a name="item__2f10_2f25_m_2etakiuchi_comment_add_for_pod">/10/25 M.TAKIUCHI COMMENT ADD FOR POD</a></strong><br />
+</li>
+</ol>
+<p>
+</p>
+<hr />
+<h1><a name="trouble_shooting">Trouble Shooting</a></h1>
+<p>基本的には、最初のデータから再構築となる。</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p><a href="mailto:システム部　瀧内誠(mtakiuc@kantei.co.jp)">システム部　瀧内誠(mtakiuc@kantei.co.jp)</a></p>
+
+</body>
+
+</html>

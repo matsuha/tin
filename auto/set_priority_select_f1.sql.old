@@ -1,0 +1,12 @@
+UPDATE TS_HEYA_TINRYO SET PRIORITY_SELECT = 1,KOUSINYMD=SYSDATE
+		where 
+		(tatemono_cd,roomno,kyokyu_ymd,tinryo)
+		in 
+		(select 
+		tatemono_cd,roomno,kyokyu_ymd,min(tinryo) tinryo
+		from ts_heya_tinryo
+		where 
+		kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+		group by tatemono_cd,roomno,kyokyu_ymd
+		)
+/

@@ -1,0 +1,219 @@
+REM
+REM =head1 NAME 
+REM
+REM ins_ts_tatemono_dtl.sql
+REM
+REM =head1 DESCRIPTION
+REM 
+REM 建物詳細マスタ(TS_TATEMONO_DTL)の情報をインサートする
+REM
+REM PRIMARY KEY(TATEMONO_CD,TOIAWASE_NO,KYOKYU_CD)
+REM
+REM ワークテーブルに格納してある建物データを入力する
+REM
+REM ts_tatemono_dtlには、IDO,KEIDOの座標カラムがあるので後からセットする
+REM IDO,KEIDOは１０進数ミリ秒単位のデータを保有している。
+REM 
+REM ゼンリンAPIの基本リターンデータの桁と同じである。
+REM 国土地理院の住所コード１～４までのデータを
+REM 利用して取得し設定してある。
+REM
+REM =over 2 
+REM
+REM =item ゼンリン地図APIではJUSHOCD1-4 を順番にTOD SHK OAZ AZCで指定する（例）
+REM
+REM =item addr5.cgi?pos=1&cnt=1&enc=SJIS&tod=14&shk=152&oaz=031&azc=003
+REM
+REM =back
+REM
+REM また上記IDO,KEIDOカラムを利用してAABSX,AABSYの２つの
+REM エリア２５カラムにデータを変換する
+REM
+REM コンバート用に関数が２つ用意してあるので下記のように実行する。
+REM
+REM =over 2
+REM
+REM =item update ts_tatemono_dtl set aabsx = keido2aabsx(keido)
+REM
+REM =item update ts_tatemono_dtl set aabsy = ido2aabsy(ido)
+REM
+REM =back
+REM
+REM =head1 HISTORY
+REM
+REM =over 2
+REM
+REM =item 2010/10/25 M.TAKIUCHI CREATED
+REM
+REM =item 2010/10/25 M.TAKIUCHI COMMENT ADD FOR POD
+REM
+REM =back
+REM
+REM =head1 Trouble Shooting
+REM
+REM 最新の供給日においての作業であれば、del_ts_tatemono_dtl.sql
+REM を実行したあと、再度実行すれば同じとなる。
+REM
+REM =head1 AUTHOR
+REM 
+REM システム部　瀧内誠(mtakiuc@kantei.co.jp)
+REM
+REM =cut
+REM
+INSERT INTO TS_TATEMONO_DTL (
+		TATEMONO_CD
+	    ,TOIAWASE_NO
+		,KYOKYU_CD
+		,BUKKEN_NM
+		,JUSHO_NM
+		,JUSHONM1
+		,JUSHONM2
+		,JUSHONM3
+		,JUSHONM4
+		,CHIBAN
+		,IDO_WGS
+		,KEIDO_WGS
+		,TOCHI_M2
+		,TOCHI_TUBO
+		,YOTO_CHIKI
+		,SYAKUCHIKEN_SYURUI
+		,EKI_CD1
+		,ENSEN_CD1
+		,EKI_NM1
+		,ENSEN_NM1
+		,EKI_BUS_KAISYA_NM1
+		,EKI_BUS_JIKAN1
+		,EKI_BUSTEI_NM1
+		,EKI_TOHO_JIKAN1
+		,EKI_BUSTEI_TOHO_JIKAN1
+		,EKI_KURUMA_JIKAN1
+		,EKI_KYORI1
+		,EKI_CD2
+		,ENSEN_CD2
+		,EKI_NM2
+		,ENSEN_NM2
+		,EKI_BUS_KAISYA_NM2
+		,EKI_BUS_JIKAN2
+		,EKI_BUSTEI_NM2
+		,EKI_TOHO_JIKAN2
+		,EKI_BUSTEI_TOHO_JIKAN2
+		,EKI_KURUMA_JIKAN2
+		,EKI_KYORI2
+		,EKI_CD3
+		,ENSEN_CD3
+		,EKI_NM3
+		,ENSEN_NM3
+		,EKI_BUS_KAISYA_NM3
+		,EKI_BUS_JIKAN3
+		,EKI_BUSTEI_NM3
+		,EKI_TOHO_JIKAN3
+		,EKI_BUSTEI_TOHO_JIKAN3
+		,BUS_KAISYA_NM1
+		,BUSTEI_NM1
+		,BUSTEI_TOHO_JIKAN1
+		,BUS_KAISYA_NM2
+		,BUSTEI_NM2
+		,BUSTEI_TOHO_JIKAN2
+		,BUS_KAISYA_NM3
+		,BUSTEI_NM3
+		,BUSTEI_TOHO_JIKAN3
+		,YOTIEN_NM
+		,YOTIEN_KYORI
+		,HOIKUEN_NM
+		,HOIKUEN_KYORI
+		,SYOGAKKO_NM
+		,SYOGAKKO_KYORI
+		,CYUGAKKO_NM
+		,CYUGAKKO_KYORI
+		,KOKO_NM
+		,KOKO_KYORI
+		,DAIGAKU_NM
+		,DAIGAKU_KYORI
+		,BYOIN_NM
+		,BYOIN_KYORI
+		,SUPER_NM
+		,SUPER_KYORI
+		,KONBINI_NM
+		,KONBINI_KYORI
+		)
+		SELECT
+		distinct(TATEMONO_CD) tatemono_cd
+	    ,TOIAWASE_NO
+		,'01' KYOKYU_CD
+		,'' BUKKEN_NM
+		,JUSYO_NM
+		,'' JUSHONM1
+		,'' JUSHONM2
+		,'' JUSHONM3
+		,'' JUSHONM4
+		,'' CHIBAN
+		,'' IDO_WGS
+		,'' KEIDO_WGS
+		,'' TOCHI_M2
+		,'' TOCHI_TUBO
+		,'' YOTO_CHIKI
+		,'' SYAKUCHIKEN_SYURUI
+		,EKI_CD1
+		,ENSEN_CD1
+		,EKI_NM1
+		,ENSEN_NM1
+		,EKI_BUS_KAISYA_NM1
+		,EKI_BUS_JIKAN1
+		,EKI_BUSTEI_NM1
+		,EKI_TOHO_JIKAN1
+		,EKI_BUSTEI_TOHO_JIKAN1
+		,'' EKI_KURUMA_JIKAN1
+		,'' EKI_KYORI1
+		,EKI_CD2
+		,ENSEN_CD2
+		,EKI_NM2
+		,ENSEN_NM2
+		,EKI_BUS_KAISYA_NM2
+		,EKI_BUS_JIKAN2
+		,EKI_BUSTEI_NM2
+		,EKI_TOHO_JIKAN2
+		,EKI_BUSTEI_TOHO_JIKAN2
+		,'' EKI_KURUMA_JIKAN2
+		,'' EKI_KYORI2
+		,EKI_CD3
+		,ENSEN_CD3
+		,EKI_NM3
+		,ENSEN_NM3
+		,EKI_BUS_KAISYA_NM3
+		,EKI_BUS_JIKAN3
+		,EKI_BUSTEI_NM3
+		,EKI_TOHO_JIKAN3
+		,EKI_BUSTEI_TOHO_JIKAN3
+		,BUS_KAISYA_NM1
+		,BUSTEI_NM1
+		,BUSTEI_TOHO_JIKAN1
+		,BUS_KAISYA_NM2
+		,BUSTEI_NM2
+		,BUSTEI_TOHO_JIKAN2
+		,BUS_KAISYA_NM3
+		,BUSTEI_NM3
+		,BUSTEI_TOHO_JIKAN3
+		,YOTIEN_NM
+		,YOTIEN_KYORI
+		,HOIKUEN_NM
+		,HOIKUEN_KYORI
+		,SYOGAKKO_NM
+		,SYOGAKKO_KYORI
+		,CYUGAKKO_NM
+		,CYUGAKKO_KYORI
+		,KOKO_NM
+		,KOKO_KYORI
+		,DAIGAKU_NM
+		,DAIGAKU_KYORI
+		,BYOIN_NM
+		,BYOIN_KYORI
+		,SUPER_NM
+		,SUPER_KYORI
+		,KONBINI_NM
+		,KONBINI_KYORI
+		    FROM apawk
+		where (tatemono_cd,toiawase_no) not in (select tatemono_cd,toiawase_no from ts_tatemono_dtl
+		where apawk.tatemono_cd = ts_tatemono_dtl.tatemono_cd
+		and apawk.toiawase_no = ts_tatemono_dtl.toiawase_no
+		)
+/

@@ -1,0 +1,34 @@
+update ts_heya_tinryo_his_sum set gtoiawase_no =trim(
+jushocd1||jushocd2||jushocd3||jushocd4||to_char(KANSEI_YMD,'YYYYMM')||
+decode(kozo_syubetu,
+'木造平屋建','1',
+'軽量鉄骨造','4',
+'その他','8',
+'ALC','9',
+'木造','2',
+'鉄骨造','3',
+'SRC(鉄骨鉄筋コンクリート)','6',
+'重量鉄骨造','A',
+'PC(プレキャストコンクリート)','7',
+'RC(鉄筋コンクリート造)','5')
+||
+SUBSTRB(SO_KAISU,0,2)||replace(replace(to_single_byte(replace(replace(replace(replace(heya_nm,'号'),'室'),'※'),'・')),'-'),'。')
+)
+/
+update ts_heya_tinryo_his_sum set gtatemono_cd =trim(
+jushocd1||jushocd2||jushocd3||jushocd4||to_char(KANSEI_YMD,'YYYYMM')||
+decode(kozo_syubetu,
+'木造平屋建','1',
+'軽量鉄骨造','4',
+'その他','8',
+'ALC','9',
+'木造','2',
+'鉄骨造','3',
+'SRC(鉄骨鉄筋コンクリート)','6',
+'重量鉄骨造','A',
+'PC(プレキャストコンクリート)','7',
+'RC(鉄筋コンクリート造)','5')
+||
+SUBSTRB(SO_KAISU,0,2)
+)
+/

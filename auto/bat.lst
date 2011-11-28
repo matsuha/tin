@@ -1,0 +1,690 @@
+
+Shall I execute using display YMD ? [Y] : 
+ins_ts_tatemono.sql
+
+105817 rows created.
+
+Elapsed: 00:00:22.23
+ins_ts_heya.sql
+
+105817 rows created.
+
+Elapsed: 00:00:13.87
+del_ts_heya_setubi.sql
+
+1016190 rows deleted.
+
+Elapsed: 00:01:38.94
+ins_ts_heya_setubi.sql
+
+1122007 rows created.
+
+Elapsed: 00:01:05.42
+del_ts_tatemono_dtl.sql
+
+1016190 rows deleted.
+
+Elapsed: 00:01:17.72
+ins_ts_tatemono_dtl
+
+1122007 rows created.
+
+Elapsed: 00:01:52.13
+del_ts_heya_chyusya.sql
+
+1016190 rows deleted.
+
+Elapsed: 00:00:53.41
+ins_ts_heya_cyusya.sql
+
+1122007 rows created.
+
+Elapsed: 00:00:42.52
+del_ts_heya_dtl.sql
+
+1016190 rows deleted.
+
+Elapsed: 00:00:52.38
+ins_ts_heya_dtl.sql
+
+1122007 rows created.
+
+Elapsed: 00:00:40.08
+down_ts_heya_tinryo
+old   1: UPDATE TS_HEYA_TINRYO SET DOWN_YMD = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD'),KOUSINYMD=SYSDATE
+new   1: UPDATE TS_HEYA_TINRYO SET DOWN_YMD = to_date('20110209','YYYYMMDD'),KOUSINYMD=SYSDATE
+old   8: 		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new   8: 		and ts_heya_tinryo.kyokyu_ymd = to_date('20110202','YYYYMMDD')
+old  12: 		and kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  12: 		and kyokyu_ymd = to_date('20110202','YYYYMMDD')
+
+57974 rows updated.
+
+Elapsed: 00:00:23.41
+ins_ts_heya_tinryo_hist_start.sql
+
+0 rows created.
+
+Elapsed: 00:00:02.66
+ins_ts_heya_tinryo_hist_end.sql
+old  14: 			,to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new  14: 			,to_date('20110209','YYYYMMDD')
+old  15: 			,to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  15: 			,to_date('20110202','YYYYMMDD')
+old  16: 			,to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  16: 			,to_date('20110202','YYYYMMDD')
+old  26: 		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  26: 		and ts_heya_tinryo.kyokyu_ymd = to_date('20110202','YYYYMMDD')
+old  28: 		and kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  28: 		and kyokyu_ymd = to_date('20110202','YYYYMMDD')
+
+49803 rows created.
+
+Elapsed: 00:00:06.52
+mv_ts_heya_tinryo_bk
+old 154: 		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new 154: 		and ts_heya_tinryo.kyokyu_ymd = to_date('20110202','YYYYMMDD')
+old 156: 		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new 156: 		and ts_heya_tinryo.kyokyu_ymd = to_date('20110202','YYYYMMDD')
+
+55840 rows created.
+
+Elapsed: 00:00:14.58
+old   9: 		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new   9: 		and ts_heya_tinryo.kyokyu_ymd = to_date('20110202','YYYYMMDD')
+old  11: 		and kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  11: 		and kyokyu_ymd = to_date('20110202','YYYYMMDD')
+
+55840 rows deleted.
+
+Elapsed: 00:00:10.48
+ins_ts_heya_tinryo.sql
+old 151: 		and ts_heya_tinryo.kyokyu_ymd = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new 151: 		and ts_heya_tinryo.kyokyu_ymd = to_date('20110202','YYYYMMDD')
+
+129417 rows created.
+
+Elapsed: 00:00:20.32
+up_heya_tinryo.sql
+old   1: UPDATE TS_HEYA_TINRYO SET KYOKYU_YMD = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD'),KOUSINYMD=SYSDATE
+new   1: UPDATE TS_HEYA_TINRYO SET KYOKYU_YMD = to_date('20110209','YYYYMMDD'),KOUSINYMD=SYSDATE
+old   3: 		and KYOKYU_YMD =  to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new   3: 		and KYOKYU_YMD =  to_date('20110202','YYYYMMDD')
+
+992590 rows updated.
+
+Elapsed: 00:01:23.54
+up_heya_tinryo_priority_select_init.sql
+old   3: AND kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new   3: AND kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+932354 rows updated.
+
+Elapsed: 00:00:23.11
+set_priority_select_f1.sql
+old  15: 				ts_heya_tinryo.kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new  15: 				ts_heya_tinryo.kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+1061497 rows updated.
+
+Elapsed: 00:00:27.66
+old  21: 								ts_heya_tinryo.kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new  21: 								ts_heya_tinryo.kyokyu_ymd = to_date('20110209','YYYYMMDD')
+old  28: 		and  ts_heya_tinryo.kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new  28: 		and  ts_heya_tinryo.kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+1022869 rows updated.
+
+Elapsed: 00:00:42.54
+del_dup_priority_select_record.sql 12
+old   9: AND T1.kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new   9: AND T1.kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+16024 rows updated.
+
+Elapsed: 00:00:14.60
+ins_ts_heya_tinryo_hist.sql 11
+old  50: 		kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new  50: 		kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+115917 rows created.
+
+Elapsed: 00:00:04.09
+up_ts_heya_tinryo_hist.sql  10
+old   2: set END_YMD = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new   2: set END_YMD = to_date('20110209','YYYYMMDD')
+old   3: ,END_YMD_SUM = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new   3: ,END_YMD_SUM = to_date('20110209','YYYYMMDD')
+old  13: 		kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new  13: 		kyokyu_ymd = to_date('20110209','YYYYMMDD')
+old  17: AND END_YMD = to_date('&&PREV_KYOKYU_YMD','YYYYMMDD')
+new  17: AND END_YMD = to_date('20110202','YYYYMMDD')
+
+899246 rows updated.
+
+Elapsed: 00:00:20.58
+up_ts_heya_tinryo_set_priority.sql 9
+old   3: 		kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new   3: 		kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+1122007 rows updated.
+
+Elapsed: 00:00:43.26
+old   3: 		kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+new   3: 		kyokyu_ymd = to_date('20110209','YYYYMMDD')
+
+1015163 rows updated.
+
+Elapsed: 00:00:41.65
+
+974996 rows updated.
+
+Elapsed: 00:00:48.35
+
+974996 rows updated.
+
+Elapsed: 00:00:48.56
+
+1016888 rows updated.
+
+Elapsed: 00:00:20.41
+
+1016888 rows updated.
+
+Elapsed: 00:00:26.23
+up_ts_heya_tinryo_his_start_ymd2.sql 8
+old  12: 			and bb.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  12: 			and bb.tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+old  27: 			and bb.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  27: 			and bb.tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+old  35:   tinryo_his_ymd = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  35:   tinryo_his_ymd = to_date('20110209', 'yyyymmdd')
+old  44:       tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  44:       tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+old  58: 			and dd.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  58: 			and dd.tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+
+49803 rows updated.
+
+Elapsed: 00:00:02.78
+old  12: 			and bb.start_ymd <= to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  12: 			and bb.start_ymd <= to_date('20110209', 'yyyymmdd')
+old  20:   end_ymd = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  20:   end_ymd = to_date('20110209', 'yyyymmdd')
+old  30:       start_ymd <= to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  30:       start_ymd <= to_date('20110209', 'yyyymmdd')
+old  44: 			and dd.start_ymd <= to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  44: 			and dd.start_ymd <= to_date('20110209', 'yyyymmdd')
+
+115917 rows updated.
+
+Elapsed: 00:00:12.05
+up_ts_heya_tinryo_his_start_ymd.sql 7
+old  12: 			and bb.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  12: 			and bb.tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+old  26: 			and bb.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  26: 			and bb.tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+old  33:   tinryo_his_ymd = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  33:   tinryo_his_ymd = to_date('20110209', 'yyyymmdd')
+old  42:       tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  42:       tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+old  55: 			and dd.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  55: 			and dd.tinryo_his_ymd <= to_date('20110202', 'yyyymmdd')
+
+0 rows updated.
+
+Elapsed: 00:00:00.36
+old  12: 			and bb.tinryo_his_ymd <= to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  12: 			and bb.tinryo_his_ymd <= to_date('20110209', 'yyyymmdd')
+old  19:   tinryo_his_ymd = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  19:   tinryo_his_ymd = to_date('20110209', 'yyyymmdd')
+old  29:       tinryo_his_ymd <= to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  29:       tinryo_his_ymd <= to_date('20110209', 'yyyymmdd')
+old  42: 			and dd.tinryo_his_ymd <= to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new  42: 			and dd.tinryo_his_ymd <= to_date('20110209', 'yyyymmdd')
+
+0 rows updated.
+
+Elapsed: 00:00:00.26
+oomiya eki no ekinm change 6
+
+150370 rows updated.
+
+Elapsed: 00:00:05.58
+
+53955 rows updated.
+
+Elapsed: 00:00:01.29
+
+29743 rows updated.
+
+Elapsed: 00:00:03.07
+
+0 rows updated.
+
+Elapsed: 00:00:00.08
+ju_hist_sum 5
+
+Table truncated.
+
+Elapsed: 00:00:00.21
+old  14: 		to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd') kyokyu_ymd,
+new  14: 		to_date('20110209', 'yyyymmdd') kyokyu_ymd,
+
+1114769 rows created.
+
+Elapsed: 00:00:43.10
+
+49803 rows updated.
+
+Elapsed: 00:00:04.35
+
+1064966 rows updated.
+
+Elapsed: 00:01:09.23
+
+1064966 rows updated.
+
+Elapsed: 00:01:25.12
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:00:59.83
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:00:48.13
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+
+1114769 rows updated.
+
+Elapsed: 00:01:38.86
+
+Commit complete.
+
+Elapsed: 00:00:00.04
+
+1114769 rows updated.
+
+Elapsed: 00:01:24.85
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:01:36.22
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:01:20.27
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:02:23.25
+
+Commit complete.
+
+Elapsed: 00:00:00.06
+
+0 rows updated.
+
+Elapsed: 00:00:03.59
+
+Commit complete.
+
+Elapsed: 00:00:00.00
+
+102428 rows updated.
+
+Elapsed: 00:00:06.49
+
+102444 rows updated.
+
+Elapsed: 00:00:05.73
+
+109372 rows updated.
+
+Elapsed: 00:00:07.71
+
+109372 rows updated.
+
+Elapsed: 00:00:04.95
+
+23983 rows updated.
+
+Elapsed: 00:00:02.20
+
+24014 rows updated.
+
+Elapsed: 00:00:02.15
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+up_ju1-ju4 4
+
+1114769 rows updated.
+
+Elapsed: 00:01:49.39
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:01:18.35
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+1114769 rows updated.
+
+Elapsed: 00:01:19.14
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+
+1114769 rows updated.
+
+Elapsed: 00:01:36.01
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+Index dropped.
+
+Elapsed: 00:00:00.79
+
+Index created.
+
+Elapsed: 00:00:02.63
+
+Index dropped.
+
+Elapsed: 00:00:00.03
+
+Index created.
+
+Elapsed: 00:00:02.28
+
+Index dropped.
+
+Elapsed: 00:00:00.03
+
+Index created.
+
+Elapsed: 00:00:02.20
+
+Index dropped.
+
+Elapsed: 00:00:00.02
+
+Index created.
+
+Elapsed: 00:00:02.32
+
+Index dropped.
+
+Elapsed: 00:00:00.02
+
+Index created.
+
+Elapsed: 00:00:02.35
+
+1114769 rows updated.
+
+Elapsed: 00:01:40.83
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+jusho_sts 3
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   2: where kusitu_ym = trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+1233 rows deleted.
+
+Elapsed: 00:00:00.05
+old   8:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new   8:     trunc(to_date('20110209', 'yyyymmdd'),'mm') kusitu_ym,
+old  13:   WHERE end_ymd_sum >= trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  13:   WHERE end_ymd_sum >= trunc(to_date('20110209', 'yyyymmdd'),'mm')
+old  23:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  23:     trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+1237 rows created.
+
+Elapsed: 00:00:05.18
+
+Commit complete.
+
+Elapsed: 00:00:00.02
+
+Table dropped.
+
+Elapsed: 00:00:00.98
+old   6: 			trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new   6: 			trunc(to_date('20110209', 'yyyymmdd'),'mm') kusitu_ym,
+old  14:   AND end_ymd_sum >= trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  14:   AND end_ymd_sum >= trunc(to_date('20110209', 'yyyymmdd'),'mm')
+old  23: 						 trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  23: 						 trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+Table created.
+
+Elapsed: 00:00:01.98
+
+Index created.
+
+Elapsed: 00:00:00.09
+
+Table analyzed.
+
+Elapsed: 00:00:00.09
+
+Table analyzed.
+
+Elapsed: 00:00:00.38
+
+Table analyzed.
+
+Elapsed: 00:00:00.03
+old  10: 		and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  10: 		and aa.kusitu_ym =  trunc(to_date('20110209', 'yyyymmdd'),'mm')
+old  12: 	where aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  12: 	where aa.kusitu_ym =  trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+1237 rows updated.
+
+Elapsed: 00:00:00.03
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new   2: where kusitu_ym = trunc(to_date('20110209', 'yyyymmdd'),'dd')
+
+0 rows deleted.
+
+Elapsed: 00:00:00.04
+old  10: trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'dd') kusitu_ym,
+new  10: trunc(to_date('20110209', 'yyyymmdd'),'dd') kusitu_ym,
+old  15: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  15: where kusitu_ym = trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+1237 rows created.
+
+Elapsed: 00:00:00.01
+eki_sts 2
+old   2: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   2: where kusitu_ym = trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+66022 rows deleted.
+
+Elapsed: 00:00:03.55
+old   8:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new   8:     trunc(to_date('20110209', 'yyyymmdd'),'mm') kusitu_ym,
+old  14:   where end_ymd_sum >= trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  14:   where end_ymd_sum >= trunc(to_date('20110209', 'yyyymmdd'),'mm')
+old  22:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm'),
+new  22:     trunc(to_date('20110209', 'yyyymmdd'),'mm'),
+old  29:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new  29:     trunc(to_date('20110209', 'yyyymmdd'),'mm') kusitu_ym,
+old  35:   where end_ymd_sum >= trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  35:   where end_ymd_sum >= trunc(to_date('20110209', 'yyyymmdd'),'mm')
+old  43:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm'),
+new  43:     trunc(to_date('20110209', 'yyyymmdd'),'mm'),
+old  50:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm') kusitu_ym,
+new  50:     trunc(to_date('20110209', 'yyyymmdd'),'mm') kusitu_ym,
+old  56:   where end_ymd_sum >= trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  56:   where end_ymd_sum >= trunc(to_date('20110209', 'yyyymmdd'),'mm')
+old  64:     trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm'),
+new  64:     trunc(to_date('20110209', 'yyyymmdd'),'mm'),
+
+68646 rows created.
+
+Elapsed: 00:00:10.90
+old   2: where kusitu_ym = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd')
+new   2: where kusitu_ym = to_date('20110209', 'yyyymmdd')
+
+0 rows deleted.
+
+Elapsed: 00:00:00.22
+old   5: to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd') kusitu_ym,
+new   5: to_date('20110209', 'yyyymmdd') kusitu_ym,
+old   8: where kusitu_ym = trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new   8: where kusitu_ym = trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+68646 rows created.
+
+Elapsed: 00:00:01.38
+consis ju eki kusitu 1
+
+1237 rows updated.
+
+Elapsed: 00:00:00.02
+
+Commit complete.
+
+Elapsed: 00:00:00.13
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20110202', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+60 rows updated.
+
+Elapsed: 00:00:00.28
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20110202', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+0 rows updated.
+
+Elapsed: 00:00:00.28
+old  19: and bk.kusitu_ym =  trunc(to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd'),'dd')
+new  19: and bk.kusitu_ym =  trunc(to_date('20110202', 'yyyymmdd'),'dd')
+old  20: and aa.kusitu_ym =  trunc(to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd'),'mm')
+new  20: and aa.kusitu_ym =  trunc(to_date('20110209', 'yyyymmdd'),'mm')
+
+64 rows updated.
+
+Elapsed: 00:00:00.28
+
+75 rows updated.
+
+Elapsed: 00:00:00.00
+
+176 rows updated.
+
+Elapsed: 00:00:00.01
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+
+68646 rows updated.
+
+Elapsed: 00:00:00.38
+
+Commit complete.
+
+Elapsed: 00:00:00.01
+
+Index dropped.
+
+Elapsed: 00:00:00.15
+
+Index created.
+
+Elapsed: 00:00:00.22
+
+Index dropped.
+
+Elapsed: 00:00:00.01
+
+Index created.
+
+Elapsed: 00:00:00.15
+
+Index dropped.
+
+Elapsed: 00:00:00.09
+
+Index created.
+
+Elapsed: 00:00:00.20
+
+Index dropped.
+
+Elapsed: 00:00:00.03
+
+Index created.
+
+Elapsed: 00:00:00.21
+old  23: and bk.kusitu_ym =  to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  23: and bk.kusitu_ym =  to_date('20110202', 'yyyymmdd')
+
+0 rows updated.
+
+Elapsed: 00:00:00.05
+old  23: and bk.kusitu_ym =  to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd')
+new  23: and bk.kusitu_ym =  to_date('20110202', 'yyyymmdd')
+
+0 rows updated.
+
+Elapsed: 00:00:00.04
+
+45879 rows updated.
+
+Elapsed: 00:00:00.34
+
+Commit complete.
+
+Elapsed: 00:00:00.01

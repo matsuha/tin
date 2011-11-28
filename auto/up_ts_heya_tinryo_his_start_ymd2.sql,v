@@ -1,0 +1,140 @@
+head     1.1;
+access   ;
+symbols  ;
+locks    mtakiuch:1.1; strict;
+comment  @@;
+
+
+1.1
+date     2010.10.12.16.38.38;  author mtakiuch;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@update
+	ts_heya_tinryo_his aa
+set
+	aa.start_ymd = (
+		select
+			min(tinryo_his_ymd) as tinryo_his_ymd
+		from
+			ts_heya_tinryo_his bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+			and bb.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+			and bb.start_flg != '1'
+			and bb.end_flg != '1'
+                group by 
+                    tatemono_cd
+                    , roomno
+        ),
+	aa.start_ymd_sum = (
+		select
+			min(tinryo_his_ymd) as tinryo_his_ymd
+		from
+			ts_heya_tinryo_his bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+			and bb.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+			and bb.start_flg != '1'
+			and bb.end_flg != '1'
+                group by 
+                    tatemono_cd
+                    , roomno
+        )
+where
+  tinryo_his_ymd = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd') 
+  and end_flg = '1'
+  and exists (
+    select 
+      tatemono_cd
+      , roomno
+    from
+      ts_heya_tinryo_his cc
+    where
+      tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+      and start_flg != '1'
+      and end_flg != '1'
+      and aa.tatemono_cd = cc.tatemono_cd
+      and aa.roomno = cc.roomno
+  ) 
+  and nvl(aa.start_ymd, sysdate - 3650) < (
+		select
+			min(tinryo_his_ymd) as tinryo_his_ymd
+		from
+			ts_heya_tinryo_his dd
+		where
+                        aa.tatemono_cd = dd.tatemono_cd
+                        and aa.roomno = dd.roomno
+			and dd.tinryo_his_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+			and dd.start_flg != '1'
+			and dd.end_flg != '1'
+                group by 
+                    tatemono_cd
+                    , roomno
+        )
+/
+update
+	ts_heya_tinryo_his aa
+set
+	aa.start_ymd_sum = (
+		select
+			min(tinryo_his_ymd) as tinryo_his_ymd
+		from
+			ts_heya_tinryo_his bb
+		where
+                        aa.tatemono_cd = bb.tatemono_cd
+                        and aa.roomno = bb.roomno
+			and bb.start_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+			and bb.start_flg != '1'
+			and bb.end_flg != '1'
+                group by 
+                    tatemono_cd
+                    , roomno
+        )
+where
+  end_ymd = to_date('&&THIS_KYOKYU_YMD', 'yyyymmdd') 
+  and end_flg != '1'
+  and start_flg != '1'
+  and exists (
+    select 
+      tatemono_cd
+      , roomno
+    from
+      ts_heya_tinryo_his cc
+    where
+      start_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+      and start_flg != '1'
+      and end_flg != '1'
+      and aa.tatemono_cd = cc.tatemono_cd
+      and aa.roomno = cc.roomno
+  ) 
+  and nvl(aa.start_ymd_sum, sysdate - 3650) < (
+		select
+			min(tinryo_his_ymd) as tinryo_his_ymd
+		from
+			ts_heya_tinryo_his dd
+		where
+                        aa.tatemono_cd = dd.tatemono_cd
+                        and aa.roomno = dd.roomno
+			and dd.start_ymd <= to_date('&&PREV_KYOKYU_YMD', 'yyyymmdd') 
+			and dd.start_flg != '1'
+			and dd.end_flg != '1'
+                group by 
+                    tatemono_cd
+                    , roomno
+        )
+/
+@

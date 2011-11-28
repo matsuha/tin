@@ -1,0 +1,47 @@
+! grep -v ^REM define.sql
+define PREV_KYOKYU_YMD = 20110921
+define THIS_KYOKYU_YMD = 20110928
+ACCEPT is_ok PROMPT 'Shall I execute using display YMD ? [Y] : '
+REM
+REM =head1 NAME 
+REM
+REM define.sql
+REM
+REM =head1 SYNOPSIS
+REM 
+REM     例 手修正
+REM
+REM     define PREV_KYOKYU_YMD = 20100929 ・・編集
+REM     define THIS_KYOKYU_YMD = 20101021 ・・編集
+REM
+REM     @define
+REM     @other_batch_sql・・・
+REM
+REM =head1 DESCRIPTION
+REM 
+REM 前回データ提供日(PREV_KYOKYU_YMD)と今回のデータ提供日(THIS_KYOKYU_YMD)
+REM をYYYYMMDDDフォーマットにて指定する
+REM 
+REM 他のバッチＳＱＬから該当変数が参照される
+REM
+REM =head1 HISTORY
+REM
+REM =over 4
+REM
+REM =item 2010/10/25 M.TAKIUCHI CREATED
+REM
+REM =item 2010/10/25 M.TAKIUCHI COMMENT ADD FOR POD
+REM
+REM =back
+REM
+REM =head1 Trouble Shooting
+REM
+REM 基本的には、最初のデータから再構築となる。
+REM 実行までにB<日付が間違っていないか、注意>する。
+REM
+REM =head1 AUTHOR
+REM 
+REM システム部　瀧内誠(mtakiuc@kantei.co.jp)
+REM
+REM =cut
+REM

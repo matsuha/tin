@@ -1,0 +1,44 @@
+REM
+REM =head1 NAME 
+REM
+REM update_ekinm.sql
+REM
+REM =head1 DESCRIPTION
+REM 
+REM アパマンさんから提供される駅名は県コードや路線名が（XXX)で提供されるので
+REM 該当情報を削除する
+REM
+REM 例：　大宮(埼玉県) －＞ 大宮
+REM
+REM =head1 HISTORY
+REM
+REM =over 4
+REM
+REM =item 2010/10/25 M.TAKIUCHI CREATED
+REM
+REM =item 2010/10/25 M.TAKIUCHI COMMENT ADD FOR POD
+REM
+REM =back
+REM
+REM =head1 Trouble Shooting
+REM
+REM 何度実行しても同じ結果になる。
+REM
+REM =head1 AUTHOR
+REM 
+REM システム部　瀧内誠(mtakiuc@kantei.co.jp)
+REM
+REM =cut
+REM
+update ts_tatemono_dtl set eki_nm1= substrb(eki_nm1,0,instrb(eki_nm1,'(') - 1)
+where eki_nm1 like '%(%'
+/
+update ts_tatemono_dtl set eki_nm2= substrb(eki_nm2,0,instrb(eki_nm2,'(') - 1)
+where eki_nm2 like '%(%'
+/
+update ts_tatemono_dtl set eki_nm3= substrb(eki_nm3,0,instrb(eki_nm3,'(') - 1)
+where eki_nm3 like '%(%'
+/
+update ts_kusituritu_eki set ekinm=substrb(ekinm,0,instrb(ekinm,'(') - 1)
+where ekinm like '%(%'
+/

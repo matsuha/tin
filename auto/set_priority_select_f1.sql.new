@@ -1,0 +1,25 @@
+UPDATE TS_HEYA_TINRYO SET PRIORITY_SELECT = 1,KOUSINYMD=SYSDATE
+		where 
+		(tatemono_cd,roomno,kyokyu_ymd,tinryo)
+		in 
+		(select tatemono_cd,roomno,kyokyu_ymd,tinryo from (
+		(select 
+				ts_heya_tinryo.tatemono_cd,
+				ts_heya_tinryo.roomno,
+				ts_heya_tinryo.kyokyu_ymd,
+				min(ts_heya_tinryo.tinryo) tinryo,
+				max(nvl(ts_tatemono.so_kosu,0)) so_kosu
+				from 
+				ts_heya_tinryo,ts_tatemono
+		where 
+		ts_heya_tinryo.kyokyu_ymd = to_date('&&THIS_KYOKYU_YMD','YYYYMMDD')
+		and ts_heya_tinryo.tatemono_cd = ts_tatemono.tatemono_cd
+		and ts_heya_tinryo.kyokyu_cd = ts_tatemono.kyokyu_cd
+		group by 
+		ts_heya_tinryo.tatemono_cd,
+		ts_heya_tinryo.roomno,
+		ts_heya_tinryo.kyokyu_ymd
+		)
+		)
+		)
+/
